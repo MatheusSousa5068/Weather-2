@@ -123,10 +123,6 @@ export default function Main() {
                     </div>
                 </div>
             </div>
-
-            <div id="favcities-section">
-                <div id="cities-container"></div>
-            </div>
         </main>
     );
 }

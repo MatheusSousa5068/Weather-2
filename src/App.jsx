@@ -1,22 +1,29 @@
-import './App.css'
+import "./App.css";
 
-import Header from './components/Header'
-import Main from './components/Main'
-import Footer from './components/Footer'
-
-
+import Header from "./components/Header";
+import Main from "./components/Main";
+import Footer from "./components/Footer";
+import Card from "./components/Card";
 
 function App() {
-  return (
-    
-    <div className="App">
-      <Header />
+    return (
+        <div className="App">
+            <Header />
 
-      <Main />
+            <Main />
 
-      <Footer />
-    </div>
-  )
+            <div id="favcities-section">
+                <div id="cities-container">
+                    <Card />
+                    <Card />
+                    <Card />
+                    <Card />
+                </div>
+            </div>
+
+            <Footer />
+        </div>
+    );
 }
 
-export default App
+export default App;
