@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-
 function Card(props) {
     const [temp, setTemp] = useState(25);
     useEffect(() => {
@@ -12,13 +11,24 @@ function Card(props) {
                 setTemp(response.data.days[0].temp.toFixed());
             });
     }, []);
-    
+
+    useEffect(() => {
+        if (props.un == "C") {
+            setTemp(((temp - 32) / 1.8).toFixed());
+        } else {
+            
+            setTemp((1.8 * temp + 32).toFixed());
+        }
+    }, [props.un]);
+
     return (
         <div>
-            <div class="favcity-card">
+            <div className="favcity-card">
                 <span>
                     <p>{props.nome}</p>
-                    <p>{temp}ºC</p>
+                    <p>
+                        {temp}º{props.un}
+                    </p>
                 </span>
             </div>
         </div>

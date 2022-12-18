@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createContext, useContext } from "react";
 
 import Modal from "../Modal";
 
 import { openModal } from "../../utils/js/views/modal";
 import axios from "axios";
+
+import UnitContext from "../../utils/useContext";
+
 
 export default function Main(props) {
     const [temp, setTemp] = useState(25);
@@ -15,7 +18,12 @@ export default function Main(props) {
 
     const [mainCity, setMainCity] = useState("João Pessoa");
 
-    const re = /^[a-zA-Z\s]*$/
+
+    const {unitCont, setUnitCont} = useContext(UnitContext)
+    
+
+
+    const re = /^[a-zA-Z\s]*$/;
 
     useEffect(() => {
         axios
@@ -73,87 +81,102 @@ export default function Main(props) {
 
                 props.childToParent("F");
             } else {
-                alert('Insira uma cidade válida')
+                alert("Insira uma cidade válida");
             }
         }
     };
 
     return (
-        <main>
-            <div id="search-section">
-                <form>
-                    <input
-                        type="text"
-                        id="search"
-                        name="search"
-                        placeholder="Search"
-                    />
-                    <button type="button" id="search-btn">
-                        &#xf002;
-                    </button>
-                </form>
+            <main>
+                <div id="search-section">
+                    <form>
+                        <input
+                            type="text"
+                            id="search"
+                            name="search"
+                            placeholder="Search"
+                        />
+                        <button type="button" id="search-btn">
+                            &#xf002;
+                        </button>
+                    </form>
 
-                <div id="overlay"></div>
+                    <div id="overlay"></div>
 
-                <Modal />
+                    <Modal />
 
-                <div id="main-section">
-                    <div id="info-section">
-                        <button id="open-info-modal">&#xf129;</button>
-                        <div id="last-update">
-                            <div id="last-update-datetime"></div>
-                            <button type="button" id="refresh">
-                                <i className="fa-solid fa-arrows-rotate"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div id="main-info">
-                        <div id="city">{mainCity.toUpperCase()}</div>
-                        <div id="temperature">
-                            {temp} º{unit}
-                        </div>
-                        <div id="change-temp-section">
-                            ºC
-                            <input type="checkbox" id="switch" />
-                            <label
-                                htmlFor="switch"
-                                onClick={() => {
-                                    if (unit == "C") {
-                                        setUnit("F");
-
-                                        setTemp((1.8 * temp + 32).toFixed());
-                                    } else {
-                                        setUnit("C");
-
-                                        setTemp(((temp - 32) / 1.8).toFixed());
-                                    }
-                                }}
-                            ></label>
-                            ºF
-                        </div>
-                    </div>
-                    <div id="sec-info">
-                        <div id="statistics">
-                            <div id="local">
-                                <i className="fa-solid fa-location-dot"></i>
-                                {location}
+                    <div id="main-section">
+                        <div id="info-section">
+                            <button id="open-info-modal">&#xf129;</button>
+                            <div id="last-update">
+                                <div id="last-update-datetime"></div>
+                                <button type="button" id="refresh">
+                                    <i className="fa-solid fa-arrows-rotate"></i>
+                                </button>
                             </div>
-                            <div id="cloud">
-                                <i className="fa-solid fa-cloud"></i>
-                                {cloud}
+                        </div>
+                        <div id="main-info">
+                            <div id="city">{mainCity.toUpperCase()}</div>
+                            <div id="temperature">
+                                {temp} º{unit}
                             </div>
-                            <div id="wind">
-                                <i className="fa-solid fa-wind"></i>
-                                {wind}
+                            <div id="change-temp-section">
+                                ºC
+                                <input type="checkbox" id="switch" />
+                                <label
+                                    htmlFor="switch"
+                                    onClick={() => {
+                                        if (unit == "C") {
+                                            setUnit("F");
+
+
+                                            
+
+                                            setUnitCont('F')
+
+                                
+
+                                            setTemp(
+                                                (1.8 * temp + 32).toFixed()
+                                            );
+                                        } else {
+                                            setUnit("C");
+
+                                            setTemp(
+                                                ((temp - 32) / 1.8).toFixed()
+                                            );
+
+                                            setUnitCont('C')
+                                        }
+                                    }}
+                                ></label>
+                                ºF
                             </div>
-                            <div id="humidity">
-                                <i className="fa-solid fa-droplet"></i>
-                                {humidity}
+                        </div>
+                        <div id="sec-info">
+                            <div id="statistics">
+                                <div id="local">
+                                    <i className="fa-solid fa-location-dot"></i>
+                                    {location}
+                                </div>
+                                <div id="cloud">
+                                    <i className="fa-solid fa-cloud"></i>
+                                    {cloud}
+                                </div>
+                                <div id="wind">
+                                    <i className="fa-solid fa-wind"></i>
+                                    {wind}
+                                </div>
+                                <div id="humidity">
+                                    <i className="fa-solid fa-droplet"></i>
+                                    {humidity}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </main>
+            </main>
     );
 }
+
+export { UnitContext }
