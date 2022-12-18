@@ -14,7 +14,7 @@ export default function Main(props) {
     const [location, setLocation] = useState("PB, Brasil");
     const [cloud, setCloud] = useState("PB, Brasil");
     const [wind, setWind] = useState("25km/h");
-    const [humidity, setHumidity] = useState("");
+    const [humidity, setHumidity] = useState("72.6%");
 
     const [mainCity, setMainCity] = useState("João Pessoa");
 
@@ -23,7 +23,7 @@ export default function Main(props) {
     
 
 
-    const re = /^[a-zA-Z\s]*$/;
+    const re = /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/;
 
     useEffect(() => {
         axios
@@ -39,7 +39,7 @@ export default function Main(props) {
                 setLocation(`${tempp[1]}, ${tempp[2] || ""}`);
                 setCloud(`${response.data.days[0].cloudcover}%`);
                 setWind(`${response.data.days[0].windspeed}km/h`);
-                setHumidity(response.data.days[0].humidity);
+                setHumidity(`${response.data.days[0].humidity}%`);
             });
 
         const openModalButton = document.querySelector("#open-info-modal");
@@ -76,7 +76,7 @@ export default function Main(props) {
                         setLocation(`${tempp[1]}, ${tempp[2] || ""}`);
                         setCloud(`${response.data.days[0].cloudcover}%`);
                         setWind(`${response.data.days[0].windspeed}km/h`);
-                        setHumidity(response.data.days[0].humidity);
+                        setHumidity(`${response.data.days[0].humidity}%`);
                     });
 
                 props.childToParent("F");
